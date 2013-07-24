@@ -1,0 +1,76 @@
+Setting up your virtual environment
+
+This is meant to replace the virtual env setup in the flask megatutorial.
+
+We have already installed virtualenv for you on the machines in the lab. If you want to install it on your personal machine, and you have root access, the command is:
+
+% sudo pip install virtualenv
+
+Once you have virtualenv ready to go, go to your source directory for your project and create your virtual environment with the command:
+
+% virtualenv <env-name>
+
+You can call your virtualenv whatever you would like. It doesn't matter. In the mega tutorial, he calls his environment 'flask'. Just call it something you will remember. I will use 'flask' for this doc to reduce confusion.
+
+To activate the virtual environment the command is:
+
+% source flask/bin/activate
+
+To deactivate the environment, the command is:
+
+% deactivate
+
+Note that you need to feed it the path to your virtual environment to activate it so that it sets your paths correctly. You do not need the path when you deactivate since deactivate is a command that comes with virtualenv.
+
+So let's go ahead and activate our environment now. I'll wait. Good.
+
+Then, to install the things you need for the flask megatutorial, we will build a requirements file that will ensure we have the tools we need for this tutorial. We will only have to do this part once.
+
+Is your virtual environment active? Good. For the flas mega tutorial, you will need to type the following commands:
+
+pip install flask
+pip install flask-login
+pip install flask-openid
+pip install flask-mail
+pip install flask-sqlalchemy
+pip install sqlalchemy-migrate
+pip install flask-whooshalchemy
+pip install flask-wtf
+pip install flask-babel
+pip install flup
+
+Then, to fix a problem with sqlalchemy-migrate, we need to install an older verion of sqlalchemy.
+
+pip unistall sqlalchemy
+pin install squlalchemy==0.7.9
+
+Now, to prevent us from having to do this again, at your command prompt, type:
+
+% pip freeze > requirements.txt
+
+(This might give you a warning, but I think it's okay for now. It appears to be a problem with the last thing we installed, flup. If we encounter a problem with it later, we can just use pip install to install it.)
+
+Then, if/when you move to a new machine, you can rebuild this env from the requirements file without having to type all those pip commands.
+
+To recreate this env from the requirements file, the command is:
+IMPORTANT: YOU STILL HAVE TO CREATE AND ACTIVATE YOUR VIRTUAL ENVIRONMENT BEFORE YOU RUN THIS COMMAND!
+
+% pip install -r requirements.txt
+
+ Now, let's talk a moment about your project repository and the .gitignore file. By default, your shell will not show you files or directories that start with a dot(.). To see these files, you need to feed the -a flag to ls. If you have already run git init in your project directory, ls -a will show you a .git directory.
+
+Since we have the ability to recreate your virtual environment from the requirements file, it's a good practice to exclude your virtual environment from your repository. This can be done with the use of a .gitignore file. Virtual environments can be quite large, and it's a bad idea to upload them to github or track them in your repository.
+
+You can tell git to ingnore whole directories or files with certain types of extensions using regular expressions.
+
+A sample .gitignore for Python is here:
+https://github.com/github/gitignore/blob/master/Python.gitignore
+
+You can grab this file and rename it to .gitignore, or just make your own for this project. Most importantly, we need to tell it to ignore our environment, so put the following lines at the top of the file:
+
+# vitualenv
+flask
+
+(where flask is the directory name of your virtual environment if you named it something other than flask)
+
+We now return you to the flask meagtutorial, resuming at "Hello, World" in Flask
