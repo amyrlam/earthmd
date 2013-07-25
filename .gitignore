@@ -1,6 +1,9 @@
 # virtualenv
 flask
 
+tmp
+app.db
+
 *.py[cod]
 
 # C extensions
