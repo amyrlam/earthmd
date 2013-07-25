@@ -26,23 +26,25 @@ So let's go ahead and activate our environment now. I'll wait. Good.
 
 Then, to install the things you need for the flask megatutorial, we will build a requirements file that will ensure we have the tools we need for this tutorial. We will only have to do this part once.
 
-Is your virtual environment active? Good. For the flas mega tutorial, you will need to type the following commands:
+Is your virtual environment active? Good. For the flask mega tutorial, you will need to type the following commands (see notes at end for commands marked with a (*):
 
-pip install flask
+pip install flask==0.9
 pip install flask-login
 pip install flask-openid
 pip install flask-mail
 pip install flask-sqlalchemy
 pip install sqlalchemy-migrate
-pip install flask-whooshalchemy
+pip install flask-whooshalchemy(*)
 pip install flask-wtf
-pip install flask-babel
+pip install flask-babel(*)
 pip install flup
 
 Then, to fix a problem with sqlalchemy-migrate, we need to install an older verion of sqlalchemy.
 
-pip unistall sqlalchemy
-pin install squlalchemy==0.7.9
+pip uninstall sqlalchemy
+pip install sqlalchemy==0.7.9
+
+(*)These aren't currently working. They're not needed until at least chapter 10, so you should be able to get pretty far without them. I'll try to figure this out and get back to you.
 
 Now, to prevent us from having to do this again, at your command prompt, type:
 

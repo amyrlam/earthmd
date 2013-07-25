@@ -1,1 +1,1 @@
-My Hackbright web app!
+EarthMD: Earth Clinic 2.0 or WebMD meets Quora for hippies 
