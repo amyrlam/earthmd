@@ -1,8 +1,9 @@
 # virtualenv
 flask
 
+# stuff i added
 tmp
-app.db
+*.db
 
 *.py[cod]
 
