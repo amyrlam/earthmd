@@ -15,14 +15,17 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
 
-# mail server settings
-MAIL_SERVER = 'localhost'
-MAIL_PORT = 25
-MAIL_USERNAME = None
-MAIL_PASSWORD = None
+# UPDATE WITH OWN INFO HOW?
+# email server
+MAIL_SERVER = 'localhost' # 'smtp.googlemail.com'
+MAIL_PORT = 25 # 465
+MAIL_USE_TSL = False
+MAIL_USE_SSL = False # True
+MAIL_USERNAME = None # 'your-gmail-username'
+MAIL_PASSWORD = None # 'your-gmail-password'
 
 # administrator list
-ADMINS = ['amy.r.lam@gmail.com']
+ADMINS = ['hello@amyrlam.com']
 
 # pagination
 POSTS_PER_PAGE = 3
