@@ -11,8 +11,10 @@ followers = db.Table('followers',
 	db.Column('followed_id', db.Integer, db.ForeignKey('users.id'))
 )
 
-# "user" is a reserved word in postgres so changed table name from User to Users
-class Users(db.Model):
+# "user" is a reserved word in postgres so changed table name to "users"
+#? change other __tablename__s below?
+class User(db.Model):
+	__tablename__ = "users"
 	id = db.Column(db.Integer, primary_key = True)
 	nickname = db.Column(db.String(64), unique = True)
 	email = db.Column(db.String(120), index = True, unique = True)
@@ -20,7 +22,7 @@ class Users(db.Model):
 	posts = db.relationship('Post', backref = 'author', lazy = 'dynamic')
 	about_me = db.Column(db.String(140))
 	last_seen = db.Column(db.DateTime)
-	followed = db.relationship('Users',
+	followed = db.relationship('User',
 		secondary = followers,
 		primaryjoin = (followers.c.follower_id == id),
 		secondaryjoin = (followers.c.followed_id ==id),
@@ -29,12 +31,12 @@ class Users(db.Model):
 
 	@staticmethod
 	def make_unique_nickname(nickname):
-		if Users.query.filter_by(nickname = nickname).first() == None:
+		if User.query.filter_by(nickname = nickname).first() == None:
 			return nickname
 		version = 2
 		while True:
 			new_nickname = nickname + str(version)
-			if Users.query.filter_by(nickname = new_nickname).first() == None:
+			if User.query.filter_by(nickname = new_nickname).first() == None:
 				break
 			version += 1
 		return new_nickname
@@ -54,24 +56,24 @@ class Users(db.Model):
 	def avatar(self, size):
 		return 'http://www.gravatar.com/avatar/' + md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
 
-	def follow(self, users):
-		if not self.is_following(users):
-			self.followed.append(users)
+	def follow(self, user):
+		if not self.is_following(user):
+			self.followed.append(user)
 			return self
 
-	def unfollow(self, users):
-		if self.is_following(users):
-			self.followed.remove(users)
+	def unfollow(self, user):
+		if self.is_following(user):
+			self.followed.remove(user)
 			return self
 
-	def is_following(self, users):
-		return self.followed.filter(followers.c.followed_id == users.id).count() > 0
+	def is_following(self, user):
+		return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
 	def followed_posts(self):
 		return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
 
 	def __repr__(self):
-		return '<Users %r>' % (self.nickname)				
+		return '<User %r>' % (self.nickname)				
 
 class Post(db.Model):
 	__searchable__ = ['body']
