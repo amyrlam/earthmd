@@ -83,4 +83,38 @@ class Post(db.Model):
 	def __repr__(self):
 		return '<Post %r>' % (self.body)
 
+class Ailment(db.Model):
+	__searchable__ = ['body'] # keep this here?
+
+	id = db.Column(db.Integer, primary_key = True)
+	name = db.Column(db.String(140))
+	body = db.Column(db.String(140))
+	timestamp = db.Column(db.DateTime)
+
+	def __repr__(self):
+		return '<Ailment %r>' % (self.ailment)
+
+class Remedy(db.Model):
+	__searchable__ = ['body'] # keep this here?
+
+	id = db.Column(db.Integer, primary_key = True)
+	name = db.Column(db.String(140))
+	body = db.Column(db.String(140))
+	timestamp = db.Column(db.DateTime)
+
+	def __repr__(self):
+		return '<Remedy %r>' % (self.remedy)
+
+class Ailment_Remedy(db.Model):
+	__searchable__ = ['body'] # keep this here?
+
+	id = db.Column(db.Integer, primary_key = True)
+	# ailment_id = db.Column(db.Integer, ForeignKey('ailment.id'))
+	# remedy_id = db.Column(db.Integer, ForeignKey('remedy.id'))
+
+	# ailment_id = relationship("Ailment", backref=backref("ailment_remedy", order_by=id))
+
+	def __repr__(self):
+		return '<Ailment %r>' % (self.ailment)
+
 whooshalchemy.whoosh_index(app, Post)

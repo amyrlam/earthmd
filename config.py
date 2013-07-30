@@ -13,12 +13,10 @@ OPENID_PROVIDERS = [
 
 SQLALCHEMY_DATABASE_URI = 'postgresql://amyrlam@localhost/earthmd_db'
 
-# should this be here still?
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
 
 # ? below update with own info how?
-
 # email server
 MAIL_SERVER = 'localhost' # 'smtp.googlemail.com'
 MAIL_PORT = 25 # 465
