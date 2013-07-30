@@ -11,7 +11,9 @@ OPENID_PROVIDERS = [
 	{ 'name': 'Flickr', 'url': 'http://www.flickr.com/<username>' },
 	{ 'name': 'MyOpenID', 'url': 'https://www.myopenid.com' }]
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/earthmd_db')
+SQLALCHEMY_DATABASE_URI = 'postgresql://amyrlam@localhost/earthmd_db'
+
+# should this be here still?
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
 
