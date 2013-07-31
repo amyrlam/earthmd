@@ -112,7 +112,7 @@ class Ailment_Remedy(db.Model):
 	__searchable__ = ['body'] # keep this here?
 
 	id = db.Column(db.Integer, primary_key = True)
-	# ailment_id = db.Column(db.Integer, ForeignKey('ailment.id'))
+	# ailment_id = db.Column(db.Integer, db.ForeignKey('ailment.ailment.id'))
 	# remedy_id = db.Column(db.Integer, ForeignKey('remedy.id'))
 
 	# ailment_id = relationship("Ailment", backref=backref("ailment_remedy", order_by=id))
