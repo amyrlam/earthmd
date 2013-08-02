@@ -4,6 +4,19 @@ import csv
 # an ailment (9) from homepage
 d = pq(url = 'http://www.earthclinic.com/CURES/sore_throat.html')
 
+with open("scraper.tsv", "w") as f:
+	fieldnames = ("remedy", "url", "yeas")
+	output = csv.writer (f) #, delimiter = "\t")
+
+	output.writerow(fieldnames)
+
+	for i in range(0, len(d("#content-inner > table:nth-child(12) > tbody:nth-child(1) > tr"))-1): # why not working (list index out of range) but (0,19 works)
+		output.writerow(d("#content-inner > table:nth-child(12) > tbody:nth-child(1)").find("a")[i].text()) # how to call these lines into output.writerow
+		output.writerow(d("#content-inner > table:nth-child(12) > tbody:nth-child(1)").find("a")[i].values())
+		output.writerow(d("#content-inner > table:nth-child(12) > tbody:nth-child(1)").find("b")[i].text())
+
+print "done writing file"
+
 # remedies = d("tbody").find("a").html() # REMEDY, but finding first "a" only
 # remedy = d("#content-inner > table:nth-child(12) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > a:nth-child(1)").text()
 
@@ -45,17 +58,5 @@ d = pq(url = 'http://www.earthclinic.com/CURES/sore_throat.html')
 
 # home > most popular remedies (9), probably have different table:nth-child(#) as well
 
-for i in range(0, len(d("#content-inner > table:nth-child(12) > tbody:nth-child(1)"))-1): # why not working (list index out of range) but (0,19 works)
-	d("#content-inner > table:nth-child(12) > tbody:nth-child(1)").find("a")[i].text # how to call these lines into output.writerow
-	d("#content-inner > table:nth-child(12) > tbody:nth-child(1)").find("a")[i].values()
-	d("#content-inner > table:nth-child(12) > tbody:nth-child(1)").find("b")[i].text
 
-with open("scraper.tsv", "w") as f:
-	fieldnames = ("remedy", "url", "yeas")
-	output = csv.writer (f, delimiter = "\t")
-
-	output.writerow(fieldnames)
-	output.writerow(remedy)
-
-print "done writing file"
 
