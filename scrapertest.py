@@ -1,16 +1,6 @@
 from pyquery import PyQuery as pq 
 import csv
 
-# with open('scraper.csv', 'wb') as csvfile:
-#     spamwriter = csv.writer(csvfile, delimiter='\t',
-#                             quotechar='"', quoting=csv.QUOTE_ALL)
-#     spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
-#     spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
-
-
-
-
-
 # an ailment (9) from homepage
 d = pq(url = 'http://www.earthclinic.com/CURES/sore_throat.html')
 
@@ -27,7 +17,9 @@ with open("scraper.csv", "wb") as f:
 
 	for i in range(0, len(table) - 1):
 		fwriter.writerow([row.find("a")[i].text, row.find("a")[i].values(), row.find("b")[i].text]) # is there singular values
-		#fwriter.writerow(row.find("a")[i].values())
+		# fwriter.writerow(row.find("a")[i].values())
+
+	# sublime find and replace in code?
 
 		# use one writerow command for all three? but writerow only takes one arg?
 		#fwriter.writerow(d("#content-inner > table:nth-child(12) > tbody:nth-child(1)").find("a")[i].values())
