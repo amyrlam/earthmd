@@ -18,6 +18,7 @@ row = d("#content-inner > table:nth-child(12) > tbody:nth-child(1)")
 #content-inner > table:nth-child(12) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > a:nth-child(1)
 
 for i in range(0, len(table)):
+	print "---"
 	remedy = row.find("a")[i].text
 	#remedy = pq(d("#content-inner > table:nth-child(12) > tbody:nth-child(1) > tr:nth-child(" + str(i) + ") > td:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > a:nth-child(1)"))
 
