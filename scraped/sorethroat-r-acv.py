@@ -4,7 +4,7 @@ import csv
 for i in range(4, 14):
 	base_url = "http://www.earthclinic.com/CURES/sore_throat"
 	all_urls = base_url + str(i) + ".html"
-	print all_urls
+	#print all_urls
 
 	d = pq(url = all_urls) 
 
