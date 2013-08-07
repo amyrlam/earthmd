@@ -57,7 +57,8 @@ for i in range(4, 14):
 				date = date.strip()
 				username = username.strip()
 				review = review.strip().strip('"') # review.strip(' "')
-					
+				
+				print str(i+1) # id
 				print vote
 				print date
 				print username

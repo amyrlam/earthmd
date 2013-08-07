@@ -80,10 +80,13 @@ class Post(db.Model):
 	__searchable__ = ['body']
 
 	id = db.Column(db.Integer, primary_key = True)
-	body = db.Column(db.String(140))
-	timestamp = db.Column(db.DateTime)
+	ailmenttoremedy_id = db.Column(db.Integer, db.ForeignKey('ailmenttoremedy.id'))
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
+	# nickname = db.Column(db.String(64), db.ForeignKey('users.nickname')) # query / display column only? ask cassandra
+	timestamp = db.Column(db.DateTime)
+	vote = db.Column(db.String(140)) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
+	body = db.Column(db.String(1000))
+	
 	def __repr__(self):
 		return '<Post %r>' % (self.body)
 
@@ -121,11 +124,10 @@ class AilmentToRemedy(db.Model):
 	ailment_id = db.Column(db.Integer, db.ForeignKey('ailment.id'))
 	remedy_id = db.Column(db.Integer, db.ForeignKey('remedy.id'))
 
-	
 	#remedy_id = db.relationship("Remedy", backref=db.backref("ailment_remedy", order_by=id))
 
 	def __repr__(self):
-		return '<Ailment %r>' % (self.ailment)
+		return '<AilmentToRemedy %r>' % (self.ailmenttoremedy) # is this right? what is this even doing?
 
 class TestTable(db.Model):
 	__tablename__ = "testtable"

@@ -50,7 +50,8 @@ for i in range(0, len(div)):
 			date = date.strip()
 			username = username.strip()
 			review = review.strip().strip('"') # review.strip(' "')
-				
+			
+			print str(i+1) 
 			print vote
 			print date
 			print username
