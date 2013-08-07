@@ -58,15 +58,16 @@ for i in range(4, 14):
 				username = username.strip()
 				review = review.strip().strip('"') # review.strip(' "')
 				
-				#print str(i+1) # id
-				#print str(2) #ailmenttoremedy_id
+				#tableid = str(i+1) # resets with each new url, and starts at 3 for some reason
+				#ailmenttoremedy_id = str(2)
+				#user_id = str(i+3)
 				#print str(i+3) #user_id
 				#print username
 				#print date
 				#print vote
 				#print review 
 
-				print username+"---"+date+"---"+vote+"---"+review
+				print username+"\t"+date+"\t"+vote+"\t"+review
 
 				# fwriter.writerow(pq(review.find("div")[i]).html()) # error: the pseudo-class "nth-child is unknown"
 
