@@ -12,7 +12,6 @@ followers = db.Table('followers',
 )
 
 # "user" is a reserved word in postgres so changed table name to "users"
-#? change other __tablename__s below?
 
 class User(db.Model):
 	__tablename__ = "users"
@@ -77,18 +76,19 @@ class User(db.Model):
 		return '<User %r>' % (self.nickname)				
 
 class Post(db.Model):
+	__tablename__ = "post"
 	__searchable__ = ['body']
 
 	id = db.Column(db.Integer, primary_key = True)
 	ailmenttoremedy_id = db.Column(db.Integer, db.ForeignKey('ailmenttoremedy.id'))
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-	# nickname = db.Column(db.String(64), db.ForeignKey('users.nickname')) # query / display column only? ask cassandra
+	nickname = db.Column(db.String(140)) # delete this column later
 	timestamp = db.Column(db.DateTime)
 	vote = db.Column(db.String(140)) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
 	body = db.Column(db.String(1000))
 	
 	def __repr__(self):
-		return '<Post %r>' % (self.body)
+		return '<Post %r>' % (self.post)
 
 class Ailment(db.Model):
 	__tablename__ = "ailment"

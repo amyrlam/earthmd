@@ -40,7 +40,7 @@ for i in range(4, 14):
 		
 		if p.text() is not None:
 			if p.text().strip()[0] == "[":
-				print "---"
+				#print "---"
 				# print p.text()
 				try:
 					review = p.text()
@@ -58,13 +58,17 @@ for i in range(4, 14):
 				username = username.strip()
 				review = review.strip().strip('"') # review.strip(' "')
 				
-				print str(i+1) # id
-				print vote
-				print date
-				print username
-				print review
+				#print str(i+1) # id
+				#print str(2) #ailmenttoremedy_id
+				#print str(i+3) #user_id
+				#print username
+				#print date
+				#print vote
+				#print review 
 
-			# fwriter.writerow(pq(review.find("div")[i]).html()) # error: the pseudo-class "nth-child is unknown"
+				print username+"---"+date+"---"+vote+"---"+review
 
-print "---"
-print "done writing file"
+				# fwriter.writerow(pq(review.find("div")[i]).html()) # error: the pseudo-class "nth-child is unknown"
+
+#print "---"
+#print "done writing file"
