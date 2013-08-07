@@ -13,6 +13,7 @@ followers = db.Table('followers',
 
 # "user" is a reserved word in postgres so changed table name to "users"
 #? change other __tablename__s below?
+
 class User(db.Model):
 	__tablename__ = "users"
 	id = db.Column(db.Integer, primary_key = True)
@@ -87,6 +88,7 @@ class Post(db.Model):
 		return '<Post %r>' % (self.body)
 
 class Ailment(db.Model):
+	__tablename__ = "ailment"
 	__searchable__ = ['body'] # keep this here?
 
 	id = db.Column(db.Integer, primary_key = True)
@@ -94,10 +96,13 @@ class Ailment(db.Model):
 	body = db.Column(db.String(140))
 	timestamp = db.Column(db.DateTime)
 
+	#ailment_id = db.relationship("Ailment", backref=db.backref("ailment_remedy", order_by=id))
+
 	def __repr__(self):
 		return '<Ailment %r>' % (self.ailment)
 
 class Remedy(db.Model):
+	__tablename__ = "remedy"
 	__searchable__ = ['body'] # keep this here?
 
 	id = db.Column(db.Integer, primary_key = True)
@@ -108,16 +113,27 @@ class Remedy(db.Model):
 	def __repr__(self):
 		return '<Remedy %r>' % (self.remedy)
 
-class Ailment_Remedy(db.Model):
-	__searchable__ = ['body'] # keep this here?
+class AilmentToRemedy(db.Model):
+	__tablename__ = "ailmenttoremedy"
+	#__searchable__ = ['body'] # keep this here?
 
 	id = db.Column(db.Integer, primary_key = True)
-	# ailment_id = db.Column(db.Integer, db.ForeignKey('ailment.ailment.id'))
-	# remedy_id = db.Column(db.Integer, ForeignKey('remedy.id'))
+	ailment_id = db.Column(db.Integer, db.ForeignKey('ailment.id'))
+	remedy_id = db.Column(db.Integer, db.ForeignKey('remedy.id'))
 
-	# ailment_id = relationship("Ailment", backref=backref("ailment_remedy", order_by=id))
+	
+	#remedy_id = db.relationship("Remedy", backref=db.backref("ailment_remedy", order_by=id))
 
 	def __repr__(self):
 		return '<Ailment %r>' % (self.ailment)
+
+class TestTable(db.Model):
+	__tablename__ = "testtable"
+	#__searchable__ = ['body'] # keep this here?
+
+	id = db.Column(db.Integer, primary_key = True)
+	name = db.Column(db.String(140))
+	url = db.Column(db.String(340))
+	num_yeas = db.Column(db.Integer)
 
 whooshalchemy.whoosh_index(app, Post)

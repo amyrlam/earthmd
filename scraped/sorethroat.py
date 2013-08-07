@@ -1,5 +1,5 @@
 from pyquery import PyQuery as pq 
-import csv
+#import csv
 
 # an ailment (9) from homepage
 d = pq(url = 'http://www.earthclinic.com/CURES/sore_throat.html')
@@ -18,7 +18,7 @@ row = d("#content-inner > table:nth-child(12) > tbody:nth-child(1)")
 #content-inner > table:nth-child(12) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > a:nth-child(1)
 
 for i in range(0, len(table)):
-	print "---"
+	#print "---"
 	remedy = row.find("a")[i].text
 	#remedy = pq(d("#content-inner > table:nth-child(12) > tbody:nth-child(1) > tr:nth-child(" + str(i) + ") > td:nth-child(1) > strong:nth-child(1) > span:nth-child(1) > a:nth-child(1)"))
 
@@ -28,9 +28,9 @@ for i in range(0, len(table)):
 	url = str(url).strip("['").strip("']")
 	num_yeas = num_yeas.strip(" YEAS")
 
-	print remedy
-	print url
-	print num_yeas
+	print str(i+1)+","+remedy+","+url+","+num_yeas
+	#print url+"*",
+	#print num_yeas
 
 	# fwriter.writerow([row.find("a")[i].text, row.find("a")[i].values(), row.find("b")[i].text]) # is there singular values?
 	# fwriter.writerow(row.find("a")[i].values()) # this was the individual way
