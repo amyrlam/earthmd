@@ -70,10 +70,7 @@ class User(db.Model):
 		return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
 	def followed_posts(self):
-		return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
-
-	def __repr__(self):
-		return '<User %r>' % (self.nickname)				
+		return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())			
 
 class Post(db.Model):
 	__tablename__ = "post"
@@ -86,9 +83,6 @@ class Post(db.Model):
 	timestamp = db.Column(db.DateTime)
 	vote = db.Column(db.String) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
 	body = db.Column(db.String)
-	
-	def __repr__(self):
-		return '<Post %r>' % (self.post)
 
 class Ailment(db.Model):
 	__tablename__ = "ailment"
@@ -99,11 +93,6 @@ class Ailment(db.Model):
 	body = db.Column(db.String)
 	timestamp = db.Column(db.DateTime)
 
-	#ailment_id = db.relationship("Ailment", backref=db.backref("ailment_remedy", order_by=id))
-
-	def __repr__(self):
-		return '<Ailment %r>' % (self.ailment)
-
 class Remedy(db.Model):
 	__tablename__ = "remedy"
 	__searchable__ = ['body'] # keep this here?
@@ -113,9 +102,6 @@ class Remedy(db.Model):
 	body = db.Column(db.String(140))
 	timestamp = db.Column(db.DateTime)
 
-	def __repr__(self):
-		return '<Remedy %r>' % (self.remedy)
-
 class AilmentToRemedy(db.Model):
 	__tablename__ = "ailmenttoremedy"
 
@@ -123,18 +109,12 @@ class AilmentToRemedy(db.Model):
 	ailment_id = db.Column(db.Integer, db.ForeignKey('ailment.id'))
 	remedy_id = db.Column(db.Integer, db.ForeignKey('remedy.id'))
 
-	#remedy_id = db.relationship("Remedy", backref=db.backref("ailment_remedy", order_by=id))
-
-	def __repr__(self):
-		return '<AilmentToRemedy %r>' % (self.ailmenttoremedy) # is this right? what is this even doing?
-
-class TestTable(db.Model):
-	__tablename__ = "testtable"
-	#__searchable__ = ['body'] # keep this here?
+class Vote(db.Model):
+	__tablename__ = "vote"
 
 	id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.String(140))
-	url = db.Column(db.String(340))
-	num_yeas = db.Column(db.Integer)
+	post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	vote = db.Column(db.Boolean)
 
 whooshalchemy.whoosh_index(app, Post)
