@@ -2,6 +2,7 @@
 
 from app import db, models
 from pyquery import PyQuery as pq 
+from datetime import datetime
 #import csv
 
 #<class 'app.models.Post'>
@@ -61,14 +62,23 @@ for i in range(4, 14):
 				except:
 					pass
 				else:
-					vote = vote.replace("[", "").strip()
-					date = date.strip()
+					vote     = vote.replace("[", "").strip()
+					date     = date.strip()
 					username = username.strip()
-					review = review.strip().strip('"') # review.strip(' "')
+					review   = review.strip().strip('"') # review.strip(' "')
+					date     = datetime.strptime(date, "%m/%d/%Y")
 
-					post = models.Post(nickname=username, vote=vote, body=review)
-					db.session.add(post)
-					db.session.commit()
+					newuser = models.User.query.filter_by(nickname=username).first()
+					if newuser is None:
+						newuser = models.User(nickname=username)
+						db.session.add(newuser)
+
+					newpost = models.Post(nickname=username, vote=vote, body=review, timestamp=date, user_id=newuser.id)
+					db.session.add(newpost)
+
+
+
+	db.session.commit()
 
 					#print username+"\t"+date+"\t"+vote+"\t"+review
 				
