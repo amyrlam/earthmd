@@ -96,7 +96,7 @@ class Ailment(db.Model):
 
 	id = db.Column(db.Integer, primary_key = True)
 	name = db.Column(db.String(140))
-	body = db.Column(db.String(140))
+	body = db.Column(db.String)
 	timestamp = db.Column(db.DateTime)
 
 	#ailment_id = db.relationship("Ailment", backref=db.backref("ailment_remedy", order_by=id))
@@ -118,7 +118,6 @@ class Remedy(db.Model):
 
 class AilmentToRemedy(db.Model):
 	__tablename__ = "ailmenttoremedy"
-	#__searchable__ = ['body'] # keep this here?
 
 	id = db.Column(db.Integer, primary_key = True)
 	ailment_id = db.Column(db.Integer, db.ForeignKey('ailment.id'))
