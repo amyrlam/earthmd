@@ -4,7 +4,7 @@ from app import db, models
 from pyquery import PyQuery as pq 
 from datetime import datetime
 
-# ailment sore throat, remedy apple cider vinegar
+# ailment sinus infection, remedy apple cider vinegar
 
 # TO CHANGE:
 # adjust ailment name, remedy name as string
@@ -12,7 +12,7 @@ from datetime import datetime
 # manually delete reviews not for remedy in SQL that are scraped as full page is scraped
 
 # table ailment
-name = "Sore Throat"
+name = "Sinus Infection"
 
 newailment = models.Ailment.query.filter_by(name = name).first()
 if newailment is None:
@@ -40,8 +40,8 @@ newailmenttoremedy = models.AilmentToRemedy(ailment_id = newailment.id, remedy_i
 db.session.add(newailmenttoremedy)
 db.session.commit()
 
-for i in range(4, 14): # range is not inclusive on RHS
-	base_url = "http://www.earthclinic.com/CURES/sore_throat"
+for i in range(1, 18): # range is not inclusive on RHS
+	base_url = "http://www.earthclinic.com/CURES/sinus_infection"
 	all_urls = base_url + str(i) + ".html"
 	d = pq(url = all_urls) 
 
@@ -59,6 +59,8 @@ for i in range(4, 14): # range is not inclusive on RHS
 					vote     = review.split("]", 1)[0] # do 1x, return first value (index 0) only
 					review   = review.split("]", 1)[1]
 					date     = review.split(":", 1)[0]
+					date     = date.strip()
+					date     = datetime.strptime(date, "%m/%d/%Y")
 					review   = review.split(":", 1)[1]
 					username = review.split(":", 1)[0]
 					review   = review.split(":", 1)[1] # comment return
@@ -66,10 +68,10 @@ for i in range(4, 14): # range is not inclusive on RHS
 					pass
 				else:
 					vote     = vote.replace("[", "").strip()
-					date     = date.strip()
+					#date     = date.strip()
 					username = username.strip()
 					review   = review.strip(' "') # long way: review.strip().strip('"')
-					date     = datetime.strptime(date, "%m/%d/%Y")
+					#date     = datetime.strptime(date, "%m/%d/%Y")
 
 					newuser = models.User.query.filter_by(nickname = username).first()
 					if newuser is None:

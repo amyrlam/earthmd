@@ -26,7 +26,7 @@ if newailment is None:
 # table remedy
 name = "Cayenne"
 
-newremedy = models.Ailment.query.filter_by(name = name).first()
+newremedy = models.Remedy.query.filter_by(name = name).first()
 if newremedy is None:
 	timestamp = datetime.now()
 	body = 	"Add body from webpage manually in SQL here."
