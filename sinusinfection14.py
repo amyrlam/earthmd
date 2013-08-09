@@ -22,7 +22,7 @@ if newailment is None:
 	db.session.refresh(newailment)
 
 # table remedy
-name = "Apple Cider Vinegar"
+name = "Dietary Changes"
 
 newremedy = models.Remedy.query.filter_by(name = name).first()
 if newremedy is None:
@@ -38,7 +38,7 @@ newailmenttoremedy = models.AilmentToRemedy(ailment_id = newailment.id, remedy_i
 db.session.add(newailmenttoremedy)
 db.session.commit()
 
-for i in range(1, 18): # range is not inclusive on RHS
+for i in range(22, 23): # range is not inclusive on RHS
 	base_url = "http://www.earthclinic.com/CURES/sinus_infection"
 	all_urls = base_url + str(i) + ".html"
 	d = pq(url = all_urls) 

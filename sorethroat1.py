@@ -4,8 +4,6 @@ from app import db, models
 from pyquery import PyQuery as pq 
 from datetime import datetime
 
-# ailment sore throat, remedy cayenne
-
 # TO CHANGE:
 # adjust ailment name, remedy name as string
 # adjust range and URL
