@@ -66,10 +66,8 @@ for i in range(31, 33): # range is not inclusive on RHS
 					pass
 				else:
 					vote     = vote.replace("[", "").strip()
-					#date     = date.strip()
 					username = username.strip()
 					review   = review.strip(' "') # long way: review.strip().strip('"')
-					#date     = datetime.strptime(date, "%m/%d/%Y")
 
 					newuser = models.User.query.filter_by(nickname = username).first()
 					if newuser is None:

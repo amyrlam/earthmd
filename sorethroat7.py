@@ -10,7 +10,7 @@ from datetime import datetime
 # manually delete reviews not for remedy in SQL that are scraped as full page is scraped
 
 # table ailment
-name = "Sinus Infection"
+name = "Sore Throat"
 
 newailment = models.Ailment.query.filter_by(name = name).first()
 if newailment is None:
@@ -22,7 +22,7 @@ if newailment is None:
 	db.session.refresh(newailment)
 
 # table remedy
-name = "Apple Cider Vinegar"
+name = "Tabasco Sauce"
 
 newremedy = models.Remedy.query.filter_by(name = name).first()
 if newremedy is None:
@@ -38,8 +38,8 @@ newailmenttoremedy = models.AilmentToRemedy(ailment_id = newailment.id, remedy_i
 db.session.add(newailmenttoremedy)
 db.session.commit()
 
-for i in range(1, 18): # range is not inclusive on RHS
-	base_url = "http://www.earthclinic.com/CURES/sinus_infection"
+for i in range(59, 62): # range is not inclusive on RHS
+	base_url = "http://www.earthclinic.com/CURES/sore_throat"
 	all_urls = base_url + str(i) + ".html"
 	d = pq(url = all_urls) 
 
@@ -68,7 +68,7 @@ for i in range(1, 18): # range is not inclusive on RHS
 					vote     = vote.replace("[", "").strip()
 					username = username.strip()
 					review   = review.strip(' "') # long way: review.strip().strip('"')
-
+					
 					newuser = models.User.query.filter_by(nickname = username).first()
 					if newuser is None:
 						newuser = models.User(nickname = username)

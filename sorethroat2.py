@@ -57,6 +57,8 @@ for i in range(4, 14): # range is not inclusive on RHS
 					vote     = review.split("]", 1)[0] # do 1x, return first value (index 0) only
 					review   = review.split("]", 1)[1]
 					date     = review.split(":", 1)[0]
+					date     = date.strip()
+					date     = datetime.strptime(date, "%m/%d/%Y")
 					review   = review.split(":", 1)[1]
 					username = review.split(":", 1)[0]
 					review   = review.split(":", 1)[1] # comment return
@@ -64,10 +66,8 @@ for i in range(4, 14): # range is not inclusive on RHS
 					pass
 				else:
 					vote     = vote.replace("[", "").strip()
-					date     = date.strip()
 					username = username.strip()
 					review   = review.strip(' "') # long way: review.strip().strip('"')
-					date     = datetime.strptime(date, "%m/%d/%Y")
 
 					newuser = models.User.query.filter_by(nickname = username).first()
 					if newuser is None:
