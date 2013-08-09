@@ -4,7 +4,7 @@ from app import db, models
 from pyquery import PyQuery as pq 
 from datetime import datetime
 
-# ailment sore throat, remedy apple cider vinegar
+# ailment sore throat, remedy cayenne
 
 # TO CHANGE:
 # adjust ailment name, remedy name as string
@@ -24,7 +24,7 @@ if newailment is None:
 	db.session.refresh(newailment)
 
 # table remedy
-name = "Apple Cider Vinegar"
+name = "Cayenne"
 
 newremedy = models.Ailment.query.filter_by(name = name).first()
 if newremedy is None:
@@ -40,7 +40,7 @@ newailmenttoremedy = models.AilmentToRemedy(ailment_id = newailment.id, remedy_i
 db.session.add(newailmenttoremedy)
 db.session.commit()
 
-for i in range(4, 14): # range is not inclusive on RHS
+for i in range(15, 41): # range is not inclusive on RHS
 	base_url = "http://www.earthclinic.com/CURES/sore_throat"
 	all_urls = base_url + str(i) + ".html"
 	d = pq(url = all_urls) 
