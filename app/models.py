@@ -82,8 +82,8 @@ class Post(db.Model):
 	nickname = db.Column(db.String) # delete this column later
 	timestamp = db.Column(db.DateTime)
 	vote = db.Column(db.String) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
-	up_votes = db.Column(db.Integer)
-	down_votes = db.Column(db.Integer)
+	#up_votes = db.Column(db.Integer)
+	#down_votes = db.Column(db.Integer)
 	score = db.Column(db.Float)
 	body = db.Column(db.String)
 
@@ -122,5 +122,6 @@ class Vote(db.Model):
 	post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	vote = db.Column(db.Boolean)
+	__table_args__ = (db.UniqueConstraint('post_id', 'user_id'),) # may not be working
 
-whooshalchemy.whoosh_index(app, Post)
+whooshalchemy.whoosh_index(app, Post) # is this full text, which won't work with heroku
