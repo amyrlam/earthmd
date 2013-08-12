@@ -4,6 +4,8 @@
 {% block content %}
 <h1>Hi, {{g.user.nickname}}!</h1>
 {% include 'flash.html' %}
+
+
 <div class="well">
     <form class="form-horizontal" action="" method="post" name="post">
         {{form.hidden_tag()}}
@@ -23,6 +25,8 @@
         </div>
     </form>
 </div>
+
+
 {% for post in posts.items %}
     {% include 'post.html' %}
 {% endfor %}
