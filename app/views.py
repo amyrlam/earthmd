@@ -171,12 +171,10 @@ def search_results(query):
 		query = query,
 		results = results)
 
-
 @app.route('/ailments')
 def ailments():
 	ailments = Ailment.query.all() # every row and column in ailments, sqlalchemy usually returns every col
 	return render_template('ailments.html', ailments=ailments)
-
 
 @app.route('/ailment/<ailment_id>')
 def ailment(ailment_id):
@@ -224,20 +222,29 @@ def newpost(ailment_id, remedy_id):
 		print "branch2: %r" % (form.errors,)
 		return render_template('newpost.html', form=form)
 	
-# DO REMEDY END
-
 @app.route('/remedies/')
 def remedies():
 	remedies = Remedy.query.all()
 	return render_template('remedies.html', remedies=remedies)
 
-
 @app.route('/remedy/<remedy_id>')
 def remedy(remedy_id):
 	remedy = Remedy.query.get_or_404(remedy_id)
-	posts = Post.query.filter(Remedy.id == result.id)
-	# import pdb; pdb.set_trace()
-	return render_template('remedy.html', remedy=remedy, posts=posts)
+
+	ailmenttoremedies = AilmentToRemedy.query.filter_by(remedy_id=remedy.id).all()
+
+	ailments = []
+	for row in ailmenttoremedies:
+		ailment = Ailment.query.get(row.ailment_id)
+		ailments.append(ailment)
+
+	return render_template('remedy.html', remedy=remedy, ailments=ailments)
+
+def lookup_pair(ailment_id, remedy_id):
+	ailment = Ailment.query.get_or_404(ailment_id)
+	remedy = Remedy.query.get_or_404(remedy_id)
+	ailmenttoremedy = AilmentToRemedy.query.filter_by(ailment_id=ailment.id, remedy_id=remedy.id).first()
+	return (ailment, remedy, ailmenttoremedy)
 
 # HAVE REMEDY TO POSTS GO TO SAME @app.route POSTS ABOVE
 

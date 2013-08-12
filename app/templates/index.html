@@ -10,7 +10,7 @@
         <div class="control-group{% if form.errors.post %} error{% endif %}">
             <label class="control-label" for="post">Say something:</label>
             <div class="controls">
-                {{ form.post(size = 30, maxlength = 140) }}
+                {{ form.body(size = 30, maxlength = 140) }}
                 {% for error in form.errors.post %}
                     <span class="help-inline">[{{error}}]</span><br>
                 {% endfor %}

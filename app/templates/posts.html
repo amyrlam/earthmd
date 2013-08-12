@@ -8,7 +8,7 @@
 <ul>
 	{% for post in posts %}
 	<li>
-		<p>{{ post.nickname }}</p>
+		<p>{{ post.author.nickname }}</p>
 		<p>{{ post_categories[post.category] }}
 		<p>{{ post.body }}</p>
 	</li>

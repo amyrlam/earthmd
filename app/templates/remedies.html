@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <ul>
-	{% for remedy in results %}
+	{% for remedy in remedies %}
 	<li>
 		<a href="{{ url_for('remedy', remedy_id=remedy.id) }}">{{ remedy.name }}</a>
 	</li>

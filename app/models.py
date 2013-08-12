@@ -22,7 +22,7 @@ class User(db.Model):
 	nickname = db.Column(db.String(64), unique = True)
 	email = db.Column(db.String(120), index = True, unique = True)
 	role = db.Column(db.SmallInteger, default = ROLE_USER)
-	posts = db.relationship('Post', backref = 'author', lazy = 'dynamic') # should this not show up in psql users?
+	posts = db.relationship('Post', backref = 'author', lazy = 'dynamic') # should this not show up in psql users? yes it is a join
 	about_me = db.Column(db.String(140))
 	last_seen = db.Column(db.DateTime)
 	followed = db.relationship('User',
@@ -84,7 +84,7 @@ class Post(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	nickname = db.Column(db.String) # delete this column later
 	timestamp = db.Column(db.DateTime)
-	# will be deleted later 
+	# vote will be deleted here later 
 	vote = db.Column(db.String) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
 	category = db.Column(db.Integer)
 	#up_votes = db.Column(db.Integer)
