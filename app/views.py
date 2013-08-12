@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid 
 from forms import LoginForm, EditForm, PostForm, SearchForm
-from models import User, ROLE_USER, ROLE_ADMIN, Post, Remedy, Ailment, AilmentToRemedy
+from models import User, ROLE_USER, ROLE_ADMIN, Post, Remedy, Ailment, AilmentToRemedy, post_categories
 from datetime import datetime
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
 from emails import follower_notification
@@ -192,20 +192,38 @@ def ailment(ailment_id):
 
 	return render_template('ailment.html', ailment=ailment, remedies=remedies)
 
-@app.route('/posts/<ailment_id>/<remedy_id>')
-def posts(ailment_id, remedy_id):
+def lookup_pair(ailment_id, remedy_id):
 	ailment = Ailment.query.get_or_404(ailment_id)
 	remedy = Remedy.query.get_or_404(remedy_id)
-
 	ailmenttoremedy = AilmentToRemedy.query.filter_by(ailment_id=ailment.id, remedy_id=remedy.id).first()
+	return (ailment, remedy, ailmenttoremedy)
+
+@app.route('/posts/<ailment_id>/<remedy_id>')
+def posts(ailment_id, remedy_id):
+	ailment, remedy, ailmenttoremedy = lookup_pair(ailment_id, remedy_id)
 
 	# if ailmenttoremedyid == None: # correct?
-	# 	return render_template('404.html')
+	# return render_template('404.html')
 
 	posts = Post.query.filter_by(ailmenttoremedy_id = ailmenttoremedy.id)
-	return render_template('posts.html', ailment=ailment, remedy=remedy, posts=posts)
+	return render_template('posts.html', ailment=ailment, remedy=remedy, posts=posts, post_categories=post_categories)
 
-
+@app.route('/posts/<ailment_id>/<remedy_id>/new', methods = ['GET', 'POST'])
+def newpost(ailment_id, remedy_id):
+	ailment, remedy, ailmenttoremedy = lookup_pair(ailment_id, remedy_id)
+	form = PostForm(request.form)
+	if form.validate_on_submit():
+		print "branch1"
+		post = Post(category = form.category.data, body = form.body.data, timestamp = datetime.utcnow(), author = g.user, 
+					ailmenttoremedy_id = ailmenttoremedy.id)
+		db.session.add(post)
+		db.session.commit()
+		flash('Your post is now live!')
+		return redirect(url_for('posts', ailment_id=ailment.id, remedy_id=remedy.id))
+	else:
+		print "branch2: %r" % (form.errors,)
+		return render_template('newpost.html', form=form)
+	
 # DO REMEDY END
 
 @app.route('/remedies/')

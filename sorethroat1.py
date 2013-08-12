@@ -76,7 +76,7 @@ for i in range(15, 41): # range is not inclusive on RHS
 						db.session.commit()
 						db.session.refresh(newuser)
 
-					newpost = models.Post(user_id = newuser.id, nickname = username, 
+					newpost = models.Post(user_id = newuser.id, # nickname = username, 
 						timestamp = date, body = review, vote = vote, ailmenttoremedy_id = newailmenttoremedy.id)
 					db.session.add(newpost)
 

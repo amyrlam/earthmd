@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+
+<p><a href="{{ url_for('newpost', ailment_id=ailment.id, remedy_id=remedy.id) }}">Write New Post</a>
+
 <h1>{{ ailment.name }}</h1>
 <h2>{{ remedy.name }}</h2>
 <ul>
 	{% for post in posts %}
 	<li>
-		<p>{{post.nickname}}</p>
-		<p>{{post.body}}</p>
+		<p>{{ post.nickname }}</p>
+		<p>{{ post_categories[post.category] }}
+		<p>{{ post.body }}</p>
 	</li>
 	{% endfor %}
 </ul>

@@ -1,6 +1,6 @@
-from flask.ext.wtf import Form, TextField, BooleanField, TextAreaField
+from flask.ext.wtf import Form, TextField, BooleanField, TextAreaField, SelectField
 from flask.ext.wtf import Required, Length
-from app.models import User
+from app.models import User, post_categories
 
 class LoginForm(Form):
 	openid = TextField('openid', validators = [Required()])
@@ -24,9 +24,15 @@ class EditForm(Form):
 			self.nickname.errors.append('This nickname is already in use. Please choose another one.')
 			return False
 		return True
+
+post_indexes = range(len(post_categories))
+post_index_strings = map(str, post_indexes)
 	
 class PostForm(Form):
-	post = TextField('post', validators = [Required()])
+	category = SelectField('category', choices=zip(post_index_strings, post_categories))
+	body = TextAreaField('body', validators = [Required()])
+
+	# post = TextField('post', validators = [Required()])
 
 class SearchForm(Form):
 	search = TextField('search', validators = [Required()])

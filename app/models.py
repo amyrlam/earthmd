@@ -11,6 +11,9 @@ followers = db.Table('followers',
 	db.Column('followed_id', db.Integer, db.ForeignKey('users.id'))
 )
 
+post_categories = ['YEA', 'NAY', 'BETTER BUT NOT CURED', 'WORKED TEMPORARILY', 'BETTER BUT WITH SIDE EFFECTS', 
+					'SIDE EFFECTS', 'WARNING!', 'QUESTION']
+
 # "user" is a reserved word in postgres so changed table name to "users"
 
 class User(db.Model):
@@ -81,10 +84,12 @@ class Post(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	nickname = db.Column(db.String) # delete this column later
 	timestamp = db.Column(db.DateTime)
+	# will be deleted later 
 	vote = db.Column(db.String) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
+	category = db.Column(db.Integer)
 	#up_votes = db.Column(db.Integer)
 	#down_votes = db.Column(db.Integer)
-	#score = db.Column(db.Float)
+	score = db.Column(db.Float)
 	body = db.Column(db.String)
 
 class Ailment(db.Model):
