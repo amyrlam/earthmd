@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid 
 from forms import LoginForm, EditForm, PostForm, SearchForm
-from models import User, ROLE_USER, ROLE_ADMIN, Post, Remedy
+from models import User, ROLE_USER, ROLE_ADMIN, Post, Remedy, Ailment, AilmentToRemedy
 from datetime import datetime
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
 from emails import follower_notification
@@ -172,19 +172,56 @@ def search_results(query):
 		results = results)
 
 
+@app.route('/ailments')
+def ailments():
+	ailments = Ailment.query.all() # every row and column in ailments, sqlalchemy usually returns every col
+	return render_template('ailments.html', ailments=ailments)
+
+
+@app.route('/ailment/<ailment_id>')
+def ailment(ailment_id):
+	ailment = Ailment.query.get_or_404(ailment_id) # get returns one
+
+	ailmenttoremedies = AilmentToRemedy.query.filter_by(ailment_id=ailment.id).all()  
+	
+	remedies = []
+	for row in ailmenttoremedies:
+		remedy = Remedy.query.get(row.remedy_id)
+		# print remedy.name 
+		remedies.append(remedy)
+
+	return render_template('ailment.html', ailment=ailment, remedies=remedies)
+
+@app.route('/posts/<ailment_id>/<remedy_id>')
+def posts(ailment_id, remedy_id):
+	ailment = Ailment.query.get_or_404(ailment_id)
+	remedy = Remedy.query.get_or_404(remedy_id)
+
+	ailmenttoremedy = AilmentToRemedy.query.filter_by(ailment_id=ailment.id, remedy_id=remedy.id).first()
+
+	# if ailmenttoremedyid == None: # correct?
+	# 	return render_template('404.html')
+
+	posts = Post.query.filter_by(ailmenttoremedy_id = ailmenttoremedy.id)
+	return render_template('posts.html', ailment=ailment, remedy=remedy, posts=posts)
+
+
+# DO REMEDY END
+
 @app.route('/remedies/')
 def remedies():
-	results = Remedy.query.all()
-	return render_template('remedy/index.html', results=results)
+	remedies = Remedy.query.all()
+	return render_template('remedies.html', remedies=remedies)
 
 
 @app.route('/remedy/<remedy_id>')
 def remedy(remedy_id):
-	result = Remedy.query.get_or_404(remedy_id)
+	remedy = Remedy.query.get_or_404(remedy_id)
 	posts = Post.query.filter(Remedy.id == result.id)
 	# import pdb; pdb.set_trace()
-	return render_template('remedy/one.html', result=result, posts=posts)
+	return render_template('remedy.html', remedy=remedy, posts=posts)
 
+# HAVE REMEDY TO POSTS GO TO SAME @app.route POSTS ABOVE
 
 
 

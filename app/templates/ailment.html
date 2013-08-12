@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ ailment.name }}</h1>
+<ul>
+	{% for remedy in remedies %}
+	<li>
+		<a href="{{ url_for('posts', ailment_id=ailment.id, remedy_id=remedy.id) }}">{{ remedy.name }}</a>
+	</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}

@@ -84,7 +84,7 @@ class Post(db.Model):
 	vote = db.Column(db.String) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
 	#up_votes = db.Column(db.Integer)
 	#down_votes = db.Column(db.Integer)
-	score = db.Column(db.Float)
+	#score = db.Column(db.Float)
 	body = db.Column(db.String)
 
 class Ailment(db.Model):
