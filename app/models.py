@@ -86,11 +86,10 @@ class Post(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	nickname = db.Column(db.String) # delete this column later
 	timestamp = db.Column(db.DateTime)
-	# vote will be deleted here later 
-	vote = db.Column(db.String) # choose from preassigned list of options e.g. yea, nay, better but not cured, etc. 
-	category = db.Column(db.Integer)
-	#up_votes = db.Column(db.Integer)
-	#down_votes = db.Column(db.Integer)
+	
+	vote = db.Column(db.String) # vote col is category as string
+	category = db.Column(db.Integer) # category col is vote as integer, see post_categories above
+	
 	score = db.Column(db.Float)
 	body = db.Column(db.String)
 

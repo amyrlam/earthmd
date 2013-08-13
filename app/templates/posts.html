@@ -22,7 +22,7 @@ $(".upvote").click(function() {
 	var	elementInfo=elementId.split("_")
 	console.log(elementInfo[0])
 	console.log(elementInfo[1])
-	$.post('/vote', { vote: elementInfo[0], post_id: elementInfo[1], blah: "liz" } );
+	$.post('/vote', { vote: elementInfo[0], post_id: elementInfo[1], blah: "liz" });
 })
 
 </script>

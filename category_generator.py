@@ -2,6 +2,8 @@
 
 from app import db, models
 
+# turns yea, nay string (Post.vote) into corresponding list index integer (Post.category)
+
 allposts = models.Post.query.all()
 
 for post in allposts:
