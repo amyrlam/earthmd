@@ -31,7 +31,6 @@ post_index_strings = map(str, post_indexes)
 class PostForm(Form):
 	category = SelectField('category', choices=zip(post_index_strings, post_categories))
 	body = TextAreaField('body', validators = [Required()])
-
 	# post = TextField('post', validators = [Required()])
 
 class SearchForm(Form):

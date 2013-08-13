@@ -22,7 +22,9 @@ class User(db.Model):
 	nickname = db.Column(db.String(64), unique = True)
 	email = db.Column(db.String(120), index = True, unique = True)
 	role = db.Column(db.SmallInteger, default = ROLE_USER)
+	
 	posts = db.relationship('Post', backref = 'author', lazy = 'dynamic') # should this not show up in psql users? yes it is a join
+	
 	about_me = db.Column(db.String(140))
 	last_seen = db.Column(db.DateTime)
 	followed = db.relationship('User',

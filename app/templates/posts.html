@@ -8,11 +8,23 @@
 <ul>
 	{% for post in posts %}
 	<li>
+		<p class="upvote" id="up_{{post.id}}">Upvote</p>
+		<p class="downvote" id="down_{{post.id}}">Downvote</p>
 		<p>{{ post.author.nickname }}</p>
 		<p>{{ post_categories[post.category] }}
 		<p>{{ post.body }}</p>
 	</li>
 	{% endfor %}
 </ul>
+<script>
+$(".upvote").click(function() {
+	var elementId=this.getAttribute("id")
+	var	elementInfo=elementId.split("_")
+	console.log(elementInfo[0])
+	console.log(elementInfo[1])
+	$.post('/vote', { vote: elementInfo[0], post_id: elementInfo[1], blah: "liz" } );
+})
+
+</script>
 
 {% endblock %}
