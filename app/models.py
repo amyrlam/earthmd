@@ -20,7 +20,7 @@ class User(db.Model):
 	__tablename__ = "users"
 	id = db.Column(db.Integer, primary_key = True)
 	nickname = db.Column(db.String(64), unique = True)
-	email = db.Column(db.String(120), index = True, unique = True)
+	email = db.Column(db.String(120), index = True, unique = True) # duplicate to Post nickname
 	role = db.Column(db.SmallInteger, default = ROLE_USER)
 	
 	posts = db.relationship('Post', backref = 'author', lazy = 'dynamic') # should this not show up in psql users? yes it is a join
@@ -84,12 +84,12 @@ class Post(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	ailmenttoremedy_id = db.Column(db.Integer, db.ForeignKey('ailmenttoremedy.id'))
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-	nickname = db.Column(db.String) # delete this column later
+	nickname = db.Column(db.String) # delete this column later, duplicate to User nickname
 	timestamp = db.Column(db.DateTime)
 	
 	vote = db.Column(db.String) # vote col is category as string
 	category = db.Column(db.Integer) # category col is vote as integer, see post_categories above
-	
+
 	score = db.Column(db.Float)
 	body = db.Column(db.String)
 

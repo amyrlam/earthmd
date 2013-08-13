@@ -209,12 +209,13 @@ def posts(ailment_id, remedy_id):
 @app.route('/vote', methods = ['POST'])
 def vote():
 	print "We're here!"
-	vote = request.form.get("vote")
+	vote_input = request.form.get("vote") == "up" # expression == returns True, if != returns False
 	post_id = request.form.get("post_id")
-	vote = Vote(post_id=post_id, user_id=g.user, vote=vote)
+	vote = Vote(post_id=post_id, user_id=g.user.id, vote=vote_input) # limit user from voting twice with an if statement
+	# change upvote to green if successful
 	db.session.add(vote)
 	db.session.commit()
-	return "We're done!"
+	return "Vote recorded!"
 
 @app.route('/posts/<ailment_id>/<remedy_id>/new', methods = ['GET', 'POST'])
 def newpost(ailment_id, remedy_id):
