@@ -11,7 +11,7 @@
 		<p class="upvote" id="up_{{post.id}}">Upvote</p>
 		<p class="downvote" id="down_{{post.id}}">Downvote</p>
 		<p>{{ post.author.nickname }}</p>
-		<p>{{ post_categories[post.category] }}
+		<p>{{ post_categories[post.category_str] }}
 		<p>{{ post.body }}</p>
 	</li>
 	{% endfor %}

@@ -224,7 +224,7 @@ def newpost(ailment_id, remedy_id):
 	if form.validate_on_submit():
 		print "branch1"
 		# why / how can i use author here? see flask mega
-		post = Post(category=form.category.data, body=form.body.data, timestamp=datetime.utcnow(), author=g.user, 
+		post = Post(category_str=form.category.data, body=form.body.data, timestamp=datetime.utcnow(), author=g.user, 
 					ailmenttoremedy_id=ailmenttoremedy.id)
 		db.session.add(post)
 		db.session.commit()

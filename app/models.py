@@ -87,10 +87,10 @@ class Post(db.Model):
 	nickname = db.Column(db.String) # delete this column later, duplicate to User nickname
 	timestamp = db.Column(db.DateTime)
 	
-	vote = db.Column(db.String) # vote col is category as string
-	category = db.Column(db.Integer) # category col is vote as integer, see post_categories above
+	category_int = db.Column(db.String) 
+	category_str = db.Column(db.Integer) # see post_categories above
 
-	score = db.Column(db.Float)
+	score = db.Column(db.Integer)
 	body = db.Column(db.String)
 
 class Ailment(db.Model):
@@ -99,7 +99,7 @@ class Ailment(db.Model):
 
 	id = db.Column(db.Integer, primary_key = True)
 	name = db.Column(db.String(140))
-	body = db.Column(db.String)
+	body = db.Column(db.String) # blank for now
 	timestamp = db.Column(db.DateTime)
 
 class Remedy(db.Model):
@@ -108,9 +108,10 @@ class Remedy(db.Model):
 
 	id = db.Column(db.Integer, primary_key = True)
 	name = db.Column(db.String(140))
-	body = db.Column(db.String(140))
+	body = db.Column(db.String) # blank for now
 	timestamp = db.Column(db.DateTime)
 
+	# should this be deleted?
 	def __repr__(self):
 		return self.name
 
@@ -127,7 +128,8 @@ class Vote(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-	vote = db.Column(db.Boolean)
+	vote = db.Column(db.String)
+
 	__table_args__ = (db.UniqueConstraint('post_id', 'user_id'),) # may not be working
 
 whooshalchemy.whoosh_index(app, Post) # is this full text, which won't work with heroku

@@ -7,11 +7,11 @@ from app import db, models
 allposts = models.Post.query.all()
 
 for post in allposts:
-	if post.category != None:
+	if post.category_str != None:
 		continue
-	if post.vote in models.post_categories:
-		post.category = models.post_categories.index(post.vote)
+	if post.category_int in models.post_categories:
+		post.category_str = models.post_categories.index(post.category_int)
 	else:
-		print "bad category %r" % post.vote
+		print "bad category %r" % post.category_int
 
 db.session.commit()

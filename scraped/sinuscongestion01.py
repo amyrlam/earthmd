@@ -78,7 +78,7 @@ for i in range(1, 6): # range is not inclusive on RHS
 
 					# just delete nickname = username here?
 					newpost = models.Post(user_id = newuser.id, nickname = username, 
-						timestamp = date, body = review, vote = vote, ailmenttoremedy_id = newailmenttoremedy.id)
+						timestamp = date, body = review, category_int = vote, ailmenttoremedy_id = newailmenttoremedy.id)
 					db.session.add(newpost)
 
 	db.session.commit() # move outside of for loop for speed
