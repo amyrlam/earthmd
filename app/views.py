@@ -97,7 +97,7 @@ def user(nickname, page = 1):
 	if user == None:
 		flash('User ' + nickname + ' not found.')
 		return redirect(url_for('index'))
-	posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
+	posts = user.posts.paginate(page, POSTS_PER_PAGE, False) # is this pagination working?
 	return render_template('user.html',
 		user=user,
 		posts=posts)
@@ -209,7 +209,10 @@ def posts(ailment_id, remedy_id):
 @app.route('/vote', methods = ['POST'])
 def vote():
 	print "We're here!"
-	vote_input = request.form.get("vote") == "up" # expression == returns True, if != returns False
+	if request.form.get("vote") == "up": # expression == returns True, if != returns False
+		vote_input = 1
+	else:
+		vote_input = 0 
 	post_id = request.form.get("post_id")
 	vote = Vote(post_id=post_id, user_id=g.user.id, vote=vote_input) # limit user from voting twice with an if statement
 	# change upvote to green if successful
@@ -232,7 +235,7 @@ def newpost(ailment_id, remedy_id):
 		return redirect(url_for('posts', ailment_id=ailment.id, remedy_id=remedy.id))
 	else:
 		print "branch2: %r" % (form.errors,)
-		return render_template('newpost.html', form=form)
+		return render_template('post_new.html', form=form)
 	
 @app.route('/remedies/')
 def remedies():

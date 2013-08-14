@@ -128,7 +128,7 @@ class Vote(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-	vote = db.Column(db.String)
+	vote = db.Column(db.Integer)
 
 	__table_args__ = (db.UniqueConstraint('post_id', 'user_id'),) # may not be working
 

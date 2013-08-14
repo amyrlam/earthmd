@@ -13,9 +13,9 @@ for i in range(0, len(allposts) * 3):
 	vote_int = random.randint(0,4)
 
 	if vote_int == 0:
-		vote = False
+		vote = -1 # downvote
 	else:
-		vote = True
+		vote = 1 # upvote
 
 	newvote = models.Vote(post_id = post.id, user_id = user.id, vote = vote)
 	db.session.add(newvote)
