@@ -12,13 +12,19 @@ for i in range(0, len(allposts) * 3):
 	user = random.choice(allusers)
 	vote_int = random.randint(0,4)
 
-	if vote_int == 0:
-		vote = -1 # downvote
-	else:
-		vote = 1 # upvote
+	# if post, user combo already exists in sql, continue
+	# try, database INSERT IGNORE if error
 
-	newvote = models.Vote(post_id = post.id, user_id = user.id, vote = vote)
-	db.session.add(newvote)
+	try:
+		if vote_int == 0:
+			vote = -1 # downvote
+		else:
+			vote = 1 # upvote
+		newvote = models.Vote(post_id = post.id, user_id = user.id, vote = vote)
+		db.session.add(newvote)
+	except:
+		pass
+
 	print "%d/%d" % (i, len(allposts) * 3)
 
 db.session.commit()

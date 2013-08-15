@@ -91,6 +91,8 @@ class Post(db.Model):
 	category_str = db.Column(db.Integer) # see post_categories above
 
 	score = db.Column(db.Integer)
+	votes = db.relationship('Vote', backref = 'post', lazy = 'dynamic') # can call vote.post in views.py
+
 	body = db.Column(db.String)
 
 	def vote_on_post(self, vote):
@@ -132,7 +134,7 @@ class Vote(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	vote = db.Column(db.Integer)
 
-	__table_args__ = (db.UniqueConstraint('post_id', 'user_id', name='vote_post_user_unq'),) # may not be working
-	#ForeignKeyConstraint
+	#__table_args__ = (db.UniqueConstraint('post_id', 'user_id', name='vote_post_user_unq'),) 
+	# not working here, inserted directly into psql
 
 whooshalchemy.whoosh_index(app, Post) # is this full text, which won't work with heroku

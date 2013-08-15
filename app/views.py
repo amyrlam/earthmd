@@ -223,14 +223,27 @@ def vote():
 	else:
 		vote_input = -1 # downvote
 	post_id = request.form.get("post_id")
-	vote = Vote(post_id=post_id, user_id=g.user.id, vote=vote_input) # limit user from voting twice with an if statement
 	
-	# change upvote to green if successful?
-	# if user upvotes a post, can't downvote it how?
-	# see unique constraint in models.Vote
+	vote = Vote(post_id=post_id, user_id=g.user.id, vote=vote_input) 
 
 	db.session.add(vote)
 	db.session.commit()
+	db.session.refresh(vote)
+
+	vote.post.score += vote_input
+	# TypeError: unsupported operand type(s) for +=: 'NoneType' and 'int'
+
+	db.session.add(vote.post.score)
+	db.session.commit()
+
+	# if vote, Post(score += 1)
+	# manual in sql: UPDATE post SET score = (SELECT SUM(vote) FROM vote WHERE post_id = Post.id);
+
+	# change upvote to green if successful?
+
+	# if user upvotes a post, can change to downvote/cancel how?
+	# see unique constraint in models.Vote > no that didn't work, see \d vote UNIQUE in psql
+
 	return "Vote recorded!"
 
 @app.route('/posts/<ailment_id>/<remedy_id>/new', methods = ['GET', 'POST'])
