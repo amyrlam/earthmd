@@ -1,0 +1,1 @@
+SELECT ailmenttoremedy_id, user_id, nickname, timestamp, category_str, score, body, rank() OVER (PARTITION BY category_str ORDER BY score DESC) FROM post;

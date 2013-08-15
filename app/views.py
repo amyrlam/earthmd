@@ -203,19 +203,32 @@ def posts(ailment_id, remedy_id):
 	# if ailmenttoremedyid == None: # correct?
 	# return render_template('404.html')
 
+	# SELECT user_id, category_str, rank() OVER (PARTITION BY category_str ORDER BY score DESC) FROM post LIMIT 5;
+	# score = session.having(func.count(Vote.vote))
+	# print score
+	
+	# how to write strings in sqlalchemy 
+	# SELECT nickname, timestamp, category_str, body, rank() OVER (PARTITION BY category_str ORDER BY timestamp DESC) FROM post LIMIT 5;
+
 	posts = Post.query.filter_by(ailmenttoremedy_id = ailmenttoremedy.id)
+	
+	# .order_by("category_int") #.paginate(1, POSTS_PER_PAGE, False)
 	return render_template('posts.html', ailment=ailment, remedy=remedy, posts=posts, post_categories=post_categories)
 
 @app.route('/vote', methods = ['POST'])
 def vote():
 	print "We're here!"
 	if request.form.get("vote") == "up": # expression == returns True, if != returns False
-		vote_input = 1
+		vote_input = 1 # upvote
 	else:
-		vote_input = 0 
+		vote_input = -1 # downvote
 	post_id = request.form.get("post_id")
 	vote = Vote(post_id=post_id, user_id=g.user.id, vote=vote_input) # limit user from voting twice with an if statement
-	# change upvote to green if successful
+	
+	# change upvote to green if successful?
+	# if user upvotes a post, can't downvote it how?
+	# see unique constraint in models.Vote
+
 	db.session.add(vote)
 	db.session.commit()
 	return "Vote recorded!"
@@ -260,8 +273,6 @@ def lookup_pair(ailment_id, remedy_id):
 	remedy = Remedy.query.get_or_404(remedy_id)
 	ailmenttoremedy = AilmentToRemedy.query.filter_by(ailment_id=ailment.id, remedy_id=remedy.id).first()
 	return (ailment, remedy, ailmenttoremedy)
-
-# HAVE REMEDY TO POSTS GO TO SAME @app.route POSTS ABOVE
 
 
 

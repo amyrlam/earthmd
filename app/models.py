@@ -93,6 +93,12 @@ class Post(db.Model):
 	score = db.Column(db.Integer)
 	body = db.Column(db.String)
 
+	def vote_on_post(self, vote):
+		v = Vote(post_id=self.id, user_id = current_user.id, vote = vote)
+		self.score += vote
+		session.add(v)
+		session.commit(v)
+
 class Ailment(db.Model):
 	__tablename__ = "ailment"
 	__searchable__ = ['body'] # keep this here?
@@ -111,10 +117,6 @@ class Remedy(db.Model):
 	body = db.Column(db.String) # blank for now
 	timestamp = db.Column(db.DateTime)
 
-	# should this be deleted?
-	def __repr__(self):
-		return self.name
-
 class AilmentToRemedy(db.Model):
 	__tablename__ = "ailmenttoremedy"
 
@@ -130,6 +132,7 @@ class Vote(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	vote = db.Column(db.Integer)
 
-	__table_args__ = (db.UniqueConstraint('post_id', 'user_id'),) # may not be working
+	__table_args__ = (db.UniqueConstraint('post_id', 'user_id', name='vote_post_user_unq'),) # may not be working
+	#ForeignKeyConstraint
 
 whooshalchemy.whoosh_index(app, Post) # is this full text, which won't work with heroku
