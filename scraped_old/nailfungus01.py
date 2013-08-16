@@ -39,7 +39,7 @@ db.session.add(newailmenttoremedy)
 db.session.commit()
 
 for i in range(1, 4): # range is not inclusive on RHS
-	base_url = "http://www.earthclinic.com/CURES/bacterial_vaginosis"
+	base_url = "http://www.earthclinic.com/CURES/fungus"
 	all_urls = base_url + str(i) + ".html"
 	d = pq(url = all_urls) 
 
