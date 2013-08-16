@@ -224,17 +224,21 @@ def vote():
 		vote_input = -1 # downvote
 	post_id = request.form.get("post_id")
 	
-	vote = Vote(post_id=post_id, user_id=g.user.id, vote=vote_input) 
+	vote = Vote.query.filter_by(post_id=post_id, user_id=g.user.id).first()
+	
+	if vote is None:
+		vote = Vote(post_id=post_id, user_id=g.user.id, vote=vote_input) 
+		db.session.add(vote)
+		db.session.commit()
+		db.session.refresh(vote)
+	else:
+		vote.vote = vote_input
+		db.session.commit()
 
-	db.session.add(vote)
-	db.session.commit()
-	#db.session.refresh(vote)
-
-	#vote.post.score += vote_input
+	vote.post.score += vote_input
 	# TypeError: unsupported operand type(s) for +=: 'NoneType' and 'int'
 
-	#db.session.add(vote.post.score)
-	#db.session.commit()
+	db.session.commit()
 
 	# if vote, Post(score += 1)
 	# manual in sql: UPDATE post SET score = (SELECT SUM(vote) FROM vote WHERE post_id = Post.id);

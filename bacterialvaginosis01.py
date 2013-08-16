@@ -10,7 +10,7 @@ from datetime import datetime
 # manually delete reviews not for remedy in SQL that are scraped as full page is scraped
 
 # table ailment
-name = "Acid Reflux"
+name = "Bacterial Vaginosis"
 
 newailment = models.Ailment.query.filter_by(name = name).first()
 if newailment is None:
@@ -22,7 +22,7 @@ if newailment is None:
 	db.session.refresh(newailment)
 
 # table remedy
-name = "Apple Cider Vinegar"
+name = "Hydrogen Peroxide"
 
 newremedy = models.Remedy.query.filter_by(name = name).first()
 if newremedy is None:
@@ -38,8 +38,8 @@ newailmenttoremedy = models.AilmentToRemedy(ailment_id = newailment.id, remedy_i
 db.session.add(newailmenttoremedy)
 db.session.commit()
 
-for i in range(3, 25): # range is not inclusive on RHS
-	base_url = "http://www.earthclinic.com/CURES/acid_reflux"
+for i in range(31, 40): # range is not inclusive on RHS
+	base_url = "http://www.earthclinic.com/CURES/bacterial_vaginosis"
 	all_urls = base_url + str(i) + ".html"
 	d = pq(url = all_urls) 
 
@@ -78,7 +78,7 @@ for i in range(3, 25): # range is not inclusive on RHS
 
 					# just delete nickname = username here?
 					newpost = models.Post(user_id = newuser.id, nickname = username, 
-						timestamp = date, body = review, category_int = vote, ailmenttoremedy_id = newailmenttoremedy.id)
+						timestamp = date, body = review, category_str = vote, ailmenttoremedy_id = newailmenttoremedy.id)
 					db.session.add(newpost)
 
 	db.session.commit() # move outside of for loop for speed

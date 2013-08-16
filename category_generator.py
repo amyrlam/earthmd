@@ -2,16 +2,21 @@
 
 from app import db, models
 
-# turns yea, nay string (Post.vote) into corresponding list index integer (Post.category)
+
+print models.post_categories.index('NAY')
+# turns yea, nay string (Post.category_str) into corresponding list index integer (Post.category_int)
 
 allposts = models.Post.query.all()
 
 for post in allposts:
-	if post.category_str != None:
+	if post.category_str == None:
+		print "exists"
 		continue
-	if post.category_int in models.post_categories:
-		post.category_str = models.post_categories.index(post.category_int)
+	if post.category_str in models.post_categories: 
+		print "change"
+		post.category_int = models.post_categories.index(post.category_str)
+		db.session.add(post)
 	else:
-		print "bad category %r" % post.category_int
+		print "bad category %r" % post.category_str
 
 db.session.commit()

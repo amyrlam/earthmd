@@ -90,7 +90,7 @@ class Post(db.Model):
 	category_str = db.Column(db.String) 
 	category_int = db.Column(db.Integer) # see post_categories above
 
-	score = db.Column(db.Integer)
+	score = db.Column(db.Integer, default = 0)
 	votes = db.relationship('Vote', backref = 'post', lazy = 'dynamic') # can call vote.post in views.py
 
 	body = db.Column(db.String)
@@ -100,6 +100,12 @@ class Post(db.Model):
 		self.score += vote
 		session.add(v)
 		session.commit(v)
+
+	# @property
+	# def score_getter(self):
+	# 	votes = [v.vote for v in self.votes]
+	# 	return sum(votes)
+
 
 class Ailment(db.Model):
 	__tablename__ = "ailment"
