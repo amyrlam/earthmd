@@ -5,7 +5,7 @@
 <h1>Hi, {{g.user.nickname}}!</h1>
 {% include 'flash.html' %}
 
-<!-- # this was the old div for posts...would not insert into table ailmenttoremedy as-is
+<!-- # this was the old div for posts...would not insert into table ailmenttoremedy as-is -->
 
 <div class="well">
     <form class="form-horizontal" action="" method="post" name="post">
@@ -26,8 +26,6 @@
         </div>
     </form>
 </div>
-
--->
 
 {% for post in posts.items %}
     {% include 'post.html' %}

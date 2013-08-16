@@ -87,8 +87,8 @@ class Post(db.Model):
 	nickname = db.Column(db.String) # delete this column later, duplicate to User nickname
 	timestamp = db.Column(db.DateTime)
 	
-	category_int = db.Column(db.String) 
-	category_str = db.Column(db.Integer) # see post_categories above
+	category_str = db.Column(db.String) 
+	category_int = db.Column(db.Integer) # see post_categories above
 
 	score = db.Column(db.Integer)
 	votes = db.relationship('Vote', backref = 'post', lazy = 'dynamic') # can call vote.post in views.py

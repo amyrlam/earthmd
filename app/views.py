@@ -228,13 +228,13 @@ def vote():
 
 	db.session.add(vote)
 	db.session.commit()
-	db.session.refresh(vote)
+	#db.session.refresh(vote)
 
-	vote.post.score += vote_input
+	#vote.post.score += vote_input
 	# TypeError: unsupported operand type(s) for +=: 'NoneType' and 'int'
 
-	db.session.add(vote.post.score)
-	db.session.commit()
+	#db.session.add(vote.post.score)
+	#db.session.commit()
 
 	# if vote, Post(score += 1)
 	# manual in sql: UPDATE post SET score = (SELECT SUM(vote) FROM vote WHERE post_id = Post.id);
