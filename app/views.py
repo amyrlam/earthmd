@@ -210,10 +210,19 @@ def posts(ailment_id, remedy_id):
 	# how to write strings in sqlalchemy 
 	# SELECT nickname, timestamp, category_str, body, rank() OVER (PARTITION BY category_str ORDER BY timestamp DESC) FROM post LIMIT 5;
 
-	posts = Post.query.filter_by(ailmenttoremedy_id = ailmenttoremedy.id)
-	
+	top_yea = Post.query.filter_by(ailmenttoremedy_id=ailmenttoremedy.id, category_int=0).order_by(Post.score.desc()).first()
+	top_nay = Post.query.filter_by(ailmenttoremedy_id=ailmenttoremedy.id, category_int=1).order_by(Post.score.desc()).first()
+	posts = Post.query.filter_by(ailmenttoremedy_id=ailmenttoremedy.id)
+	#posts = posts[:5]
+
+	# query = db.session.query(Post, db.func.rank().over(partition_by=Post.category_str, order_by=Post.score.desc()))
+	# query = db.session.query(Post, db.func.rank().over(partition_by=Post.category_str, order_by=Post.score.desc()))
+	# posts = [result.Post for result in query]
+	#partition_by=Post.category_str).order_by(Post.score.desc()) # most positive
+	#posts = posts[:5]
+
 	# .order_by("category_int") #.paginate(1, POSTS_PER_PAGE, False)
-	return render_template('posts.html', ailment=ailment, remedy=remedy, posts=posts, post_categories=post_categories)
+	return render_template('posts.html', ailment=ailment, remedy=remedy, top_yea=top_yea, top_nay=top_nay, posts=posts, post_categories=post_categories)
 
 @app.route('/vote', methods = ['POST'])
 def vote():

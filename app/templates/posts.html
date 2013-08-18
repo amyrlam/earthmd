@@ -1,18 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="{{ url_for('newpost', ailment_id=ailment.id, remedy_id=remedy.id) }}">Write New Post</a>
+{% macro show_post(post) %}
+		<p class="upvote" id="up_{{post.id}}">Upvote</p>
+		<p class="downvote" id="down_{{post.id}}">Downvote</p>
+		<p><b>Author:</b> {{ post.author.nickname }} <b>Date:</b> {{ post.timestamp }} </p>
+		<p><b>Category:</b> {{ post.category_str }}</p>
+		<p><b>Score:</b> {{ post.score }}</p>
+		<p>{{ post.body }}</p>
+{% endmacro %} 
 
+<p><a href="{{ url_for('newpost', ailment_id=ailment.id, remedy_id=remedy.id) }}">Write New Post</a>
 <h1>{{ ailment.name }}</h1>
 <h2>{{ remedy.name }}</h2>
+<h3> Best Yay</h3>
+{{ show_post(top_yea)}}
+<h3>Best Nay</h3>
+{{ show_post(top_nay)}}
+<h3>All Posts</h3>
 <ul>
 	{% for post in posts %}
 	<li>
-		<p class="upvote" id="up_{{post.id}}">Upvote</p>
-		<p class="downvote" id="down_{{post.id}}">Downvote</p>
-		<p>{{ post.author.nickname }}</p>
-		<p>{{ post_categories[post.category_str] }}
-		<p>{{ post.body }}</p>
+{{ show_post(post) }}
 	</li>
 	{% endfor %}
 </ul>
