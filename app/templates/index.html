@@ -1,16 +1,15 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
+
 {% block content %}
-
-EarthMD 
-Home Remedies
-
-<h1>Hi, {{g.user.nickname}}!</h1>
 {% include 'flash.html' %}
-
-Home of Complementary and Alternative Medicine!
-
-Our readers have been testing and developing these folk remedies, with contributions of complementary and alternative medicine treatments from health experts in every part of the world, since 1999. We've been sent some of the most exciting holistic treatments to date – dozens of restorative remedies, plus natural cures for cancer, fibromyalgia, back pain and better than 350 other diseases and conditions!
+<div class="well well-large" style="height: 240px;">
+    <p><h3>Hi, {{ g.user.nickname }}!</h3></p>
+    <p><h4>Welcome to the Home of Complementary and Alternative Medicine!</h4></p>
+    <p>Our readers have been testing and developing these folk remedies, with contributions of complementary and alternative medicine treatments from health experts in every part of the world, since 1999.</p>
+    <p>We've been sent some of the most exciting holistic treatments to date – dozens of restorative remedies, plus natural cures for cancer, fibromyalgia, back pain and better than 350 other diseases and conditions!</p>
+    <p>EarthMD is currently ranked among the <a href="http://www.alexa.com/topsites/category/Top/Health/Alternative">Top 5 Alternative Health Sites</a> on the web and is treasured by more than 1.5 million unique monthly visitors!</p>
+</div>
 
 {% endblock %}
 

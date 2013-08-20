@@ -40,7 +40,13 @@
     {% endif %}
 </ul>
 
+{% endblock %}
+
+<!-- {#
 {% for vote in votes %}
+    {% include 'vote.html' %}
+{% endfor %}
+
 <div style="margin-top: 20px"><p>Author: {{ vote.post.author.nickname }}</p> 
      <p>Date: {{ vote.post.timestamp }}</p>
      <p>Category: {{ vote.post.category_str }}</p>
@@ -49,6 +55,6 @@
 </div>
 
 {% endfor %} 
-  
-{% endblock %}
+#} --> 
+
 

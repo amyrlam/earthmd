@@ -6,7 +6,7 @@
 		<p class="downvote" id="down_{{post.id}}">Downvote</p>
 		<p><b>Author:</b> {{ post.author.nickname }} <b>Date:</b> {{ post.timestamp }} </p>
 		<p><b>Category:</b> {{ post.category_str }}</p>
-		<p><b>Score:</b> {{ post.score }}</p>
+		<p><b>Score:</b> <span id="score">{{ post.score }}</span></p>
 		<p>{{ post.body }}</p>
 {% endmacro %} 
 
@@ -17,19 +17,20 @@
 <div class="row">
  	<div class="span6">
  		<div class="well">
-  		<h3> Best Yay</h3>
+  		<h3>The most helpful favorable review</h3>
 		{{ show_post(top_yea)}}
 		</div>
 	</div>
 	<div class="span6">
 		<div class="well">
-		<h3>Best Nay</h3>
+		<h3>The most helpful negative review</h3>
 		{{ show_post(top_nay)}}
 		</div>
 	</div>
 </div>
 </div>
 
+<div>
 <h3>All Posts</h3>
 <ul>
 	{% for post in posts %}
@@ -45,10 +46,23 @@ $(".upvote, .downvote").click(function() {
 	console.log(elementInfo[0])
 	console.log(elementInfo[1])
 	$.post('/vote', { vote: elementInfo[0], post_id: elementInfo[1] },function(response) {
-		alert(response)
+		// here we rest borders on all buttons
+		$(".upvote, .downvote").css("border", "none");
+
+		// add grey border to button was just clicked
+		$(this).css("border", "solid 1px #999");
+
+		var score = parseInt($("#score").text(), 10);
+		if (elementInfo[0] == "up") {
+			score += 1;
+		} else {
+			score -= 1;
+		}
+		$("#score").text(score);
 	});
 })
 
 </script>
+</div>
 
 {% endblock %}

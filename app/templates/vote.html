@@ -1,0 +1,18 @@
+<table class="table table-hover">
+    <tr>
+        <td width="70px"><a href="{{url_for('user', nickname = post.author.nickname)}}"><img src="{{post.author.avatar(70)}}" /></a></td>
+        <td>
+            <p><a href="{{url_for('user', nickname = post.author.nickname)}}">{{ post.author.nickname }}</a> voted on {{ momentjs(post.timestamp).fromNow() }}:</p>
+            <p>[{{ post.category_str }}]</p>
+            <p><strong>{{ post.body }}</strong></p>
+        </td>
+    </tr>
+</table>
+
+
+<div style="margin-top: 20px"><p>Author: {{ vote.post.author.nickname }}</p> 
+     <p>Date: {{ vote.post.timestamp }}</p>
+     <p>Category: {{ vote.post.category_str }}</p>
+     <p>Score: {{ vote.post.score }}</p>
+     <p>Body: {{ vote.post.body }}</p>
+</div>
