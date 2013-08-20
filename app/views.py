@@ -33,19 +33,19 @@ def internal_error(error):
 @app.route('/index', methods = ['GET', 'POST'])
 @app.route('/index/<int:page>', methods = ['GET', 'POST'])
 @login_required
-def index(page = 1):
-	form = PostForm()
-	if form.validate_on_submit():
-		post = Post(body = form.post.data, timestamp = datetime.utcnow(), author = g.user)
-		db.session.add(post)
-		db.session.commit()
-		flash('Your post is now live!')
-		return redirect(url_for('index'))
-		posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
+def index(): #page = 1):
+	# form = PostForm()
+	# if form.validate_on_submit():
+	# 	post = Post(body = form.post.data, timestamp = datetime.utcnow(), author = g.user)
+	# 	db.session.add(post)
+	# 	db.session.commit()
+	# 	flash('Your post is now live!')
+	# 	return redirect(url_for('index'))
+	# 	posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
 	return render_template('index.html',
-		title = 'Home',
-		form = form,
-		posts = posts)
+		title = 'Home')
+		# form = form,
+		# posts = posts)
 
 @app.route('/login', methods = ['GET', 'POST'])
 @oid.loginhandler
@@ -97,10 +97,14 @@ def user(nickname, page = 1):
 	if user == None:
 		flash('User ' + nickname + ' not found.')
 		return redirect(url_for('index'))
-	posts = user.posts.paginate(page, POSTS_PER_PAGE, False) # is this pagination working?
+	posts = user.posts.paginate(page, POSTS_PER_PAGE, False) # is this pagination working? sort of working
+
+	votes = Vote.query.filter_by(user_id=user.id) # return Vote.post_id and then display Post.body
+	print votes.count()
+	
 	return render_template('user.html',
 		user=user,
-		posts=posts)
+		posts=posts, votes=votes)
 
 @app.route('/edit', methods = ['GET', 'POST'])
 @login_required
@@ -173,7 +177,7 @@ def search_results(query):
 
 @app.route('/ailments')
 def ailments():
-	ailments = Ailment.query.all()
+	ailments = Ailment.query.order_by(Ailment.name)
 
 	# list has no attribute order_by
 	#.order_by(Ailment.name) # every row and column in ailments, sqlalchemy usually returns every col
@@ -183,7 +187,7 @@ def ailments():
 def ailment(ailment_id):
 	ailment = Ailment.query.get_or_404(ailment_id) # get returns one
 
-	ailmenttoremedies = AilmentToRemedy.query.filter_by(ailment_id=ailment.id).all()  
+	ailmenttoremedies = AilmentToRemedy.query.filter_by(ailment_id=ailment.id).all() 
 	
 	remedies = []
 	for row in ailmenttoremedies:
@@ -283,7 +287,7 @@ def newpost(ailment_id, remedy_id):
 	
 @app.route('/remedies/')
 def remedies():
-	remedies = Remedy.query.all()
+	remedies = Remedy.query.order_by(Remedy.name)
 	return render_template('remedies.html', remedies=remedies)
 
 @app.route('/remedy/<remedy_id>')

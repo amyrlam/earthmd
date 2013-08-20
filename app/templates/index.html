@@ -1,6 +1,7 @@
 <!-- extend base layout -->
-<!-- {% extends "base.html" %} -->
-<body>
+{% extends "base.html" %}
+{% block content %}
+
 EarthMD 
 Home Remedies
 
@@ -10,10 +11,17 @@ Home Remedies
 Home of Complementary and Alternative Medicine!
 
 Our readers have been testing and developing these folk remedies, with contributions of complementary and alternative medicine treatments from health experts in every part of the world, since 1999. We've been sent some of the most exciting holistic treatments to date – dozens of restorative remedies, plus natural cures for cancer, fibromyalgia, back pain and better than 350 other diseases and conditions!
-</body>
 
-<!-- # this was the old div for posts...would not insert into table ailmenttoremedy as-is-->
-{% block content %}
+{% endblock %}
+
+<!-- {#
+
+want to delete all this but seems to break page? 
+
+this was the old div for posts...would not insert into table ailmenttoremedy as-is
+
+
+
 <div class="well">
     <form class="form-horizontal" action="" method="post" name="post">
         {{form.hidden_tag()}}
@@ -49,4 +57,5 @@ Our readers have been testing and developing these folk remedies, with contribut
     <li class="next disabled"><a href="#">Older posts</a></li>
     {% endif %}
 </ul>
-{% endblock %}
+
+#} -->
