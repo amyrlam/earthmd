@@ -283,7 +283,7 @@ def newpost(ailment_id, remedy_id):
 		return redirect(url_for('posts', ailment_id=ailment.id, remedy_id=remedy.id))
 	else:
 		print "branch2: %r" % (form.errors,)
-		return render_template('post_new.html', form=form)
+		return render_template('post_new.html', form=form, ailment=ailment, remedy=remedy)
 	
 @app.route('/remedies/')
 def remedies():

@@ -2,12 +2,19 @@
 {% block content %}
 
 {% macro show_post(post) %}
-		<p class="upvote" id="up_{{post.id}}">Upvote</p>
-		<p class="downvote" id="down_{{post.id}}">Downvote</p>
-		<p><b>Author:</b> {{ post.author.nickname }} <b>Date:</b> {{ post.timestamp }} </p>
+<div class="media">
+	<div class="pull-left">
+		<p class="upvote" id="up_{{post.id}}"><i class="icon-thumbs-up"></i></p>
+		<p><span id="score">{{ post.score }}</span></p>
+		<p class="downvote" id="down_{{post.id}}"><i class="icon-thumbs-down"></i></p>
+	</div>
+	<div class="media-body">
+		<p><b>Author:</b> {{ post.author.nickname }}</p> 
 		<p><b>Category:</b> {{ post.category_str }}</p>
-		<p><b>Score:</b> <span id="score">{{ post.score }}</span></p>
+		<p><b>Date:</b> {{ momentjs(post.timestamp).fromNow() }}</p>
 		<p>{{ post.body }}</p>
+	</div>
+</div>
 {% endmacro %} 
 
 <h1>{{ ailment.name }}</h1>
@@ -39,6 +46,7 @@
 	</li>
 	{% endfor %}
 </ul>
+
 <script>
 $(".upvote, .downvote").click(function() {
 	var elementId=this.getAttribute("id")

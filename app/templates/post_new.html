@@ -7,6 +7,7 @@
     <form class="form-horizontal" action="" method="post" name="post">
         {{form.hidden_tag()}}
         <div class="control-group{% if form.errors.post %} error{% endif %}">
+            <h3>{{ remedy.name }} for {{ ailment.name }}</h3>
             <label class="control-label" for="post">Say something:</label>
             <div class="controls">
                 {{ form.category() }}
