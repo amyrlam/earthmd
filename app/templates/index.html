@@ -1,12 +1,19 @@
 <!-- extend base layout -->
-{% extends "base.html" %}
+<!-- {% extends "base.html" %} -->
+<body>
+EarthMD 
+Home Remedies
 
-{% block content %}
 <h1>Hi, {{g.user.nickname}}!</h1>
 {% include 'flash.html' %}
 
-<!-- # this was the old div for posts...would not insert into table ailmenttoremedy as-is -->
+Home of Complementary and Alternative Medicine!
 
+Our readers have been testing and developing these folk remedies, with contributions of complementary and alternative medicine treatments from health experts in every part of the world, since 1999. We've been sent some of the most exciting holistic treatments to date – dozens of restorative remedies, plus natural cures for cancer, fibromyalgia, back pain and better than 350 other diseases and conditions!
+</body>
+
+<!-- # this was the old div for posts...would not insert into table ailmenttoremedy as-is-->
+{% block content %}
 <div class="well">
     <form class="form-horizontal" action="" method="post" name="post">
         {{form.hidden_tag()}}

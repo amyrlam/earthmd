@@ -41,7 +41,7 @@ def index(page = 1):
 		db.session.commit()
 		flash('Your post is now live!')
 		return redirect(url_for('index'))
-	posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
+		posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
 	return render_template('index.html',
 		title = 'Home',
 		form = form,
@@ -173,7 +173,10 @@ def search_results(query):
 
 @app.route('/ailments')
 def ailments():
-	ailments = Ailment.query.all() # every row and column in ailments, sqlalchemy usually returns every col
+	ailments = Ailment.query.all()
+
+	# list has no attribute order_by
+	#.order_by(Ailment.name) # every row and column in ailments, sqlalchemy usually returns every col
 	return render_template('ailments.html', ailments=ailments)
 
 @app.route('/ailment/<ailment_id>')
@@ -213,14 +216,16 @@ def posts(ailment_id, remedy_id):
 	top_yea = Post.query.filter_by(ailmenttoremedy_id=ailmenttoremedy.id, category_int=0).order_by(Post.score.desc()).first()
 	top_nay = Post.query.filter_by(ailmenttoremedy_id=ailmenttoremedy.id, category_int=1).order_by(Post.score.desc()).first()
 	posts = Post.query.filter_by(ailmenttoremedy_id=ailmenttoremedy.id)
+
+	#.paginate(1, POSTS_PER_PAGE, False)
+	# pagination is not iterable
+
 	#posts = posts[:5]
 
 	# query = db.session.query(Post, db.func.rank().over(partition_by=Post.category_str, order_by=Post.score.desc()))
 	# query = db.session.query(Post, db.func.rank().over(partition_by=Post.category_str, order_by=Post.score.desc()))
 	# posts = [result.Post for result in query]
-	#partition_by=Post.category_str).order_by(Post.score.desc()) # most positive
-	#posts = posts[:5]
-
+	# partition_by=Post.category_str).order_by(Post.score.desc()) # most positive
 	# .order_by("category_int") #.paginate(1, POSTS_PER_PAGE, False)
 	return render_template('posts.html', ailment=ailment, remedy=remedy, top_yea=top_yea, top_nay=top_nay, posts=posts, post_categories=post_categories)
 

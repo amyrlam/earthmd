@@ -10,18 +10,31 @@
 		<p>{{ post.body }}</p>
 {% endmacro %} 
 
-<p><a href="{{ url_for('newpost', ailment_id=ailment.id, remedy_id=remedy.id) }}">Write New Post</a>
 <h1>{{ ailment.name }}</h1>
 <h2>{{ remedy.name }}</h2>
-<h3> Best Yay</h3>
-{{ show_post(top_yea)}}
-<h3>Best Nay</h3>
-{{ show_post(top_nay)}}
+<p><a href="{{ url_for('newpost', ailment_id=ailment.id, remedy_id=remedy.id) }}">Write New Post</a>
+
+<div class="row">
+ 	<div class="span6">
+ 		<div class="well">
+  		<h3> Best Yay</h3>
+		{{ show_post(top_yea)}}
+		</div>
+	</div>
+	<div class="span6">
+		<div class="well">
+		<h3>Best Nay</h3>
+		{{ show_post(top_nay)}}
+		</div>
+	</div>
+</div>
+</div>
+
 <h3>All Posts</h3>
 <ul>
 	{% for post in posts %}
 	<li>
-{{ show_post(post) }}
+	{{ show_post(post) }}
 	</li>
 	{% endfor %}
 </ul>
