@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- how to insert ailment and remedy here with jinja? -->
-
 <div class="well">
     <form class="form-horizontal" action="" method="post" name="post">
         {{form.hidden_tag()}}
@@ -14,7 +12,6 @@
                 {% for error in form.category.errors %}
                     <span class="help-inline">[{{error}}]</span><br>
                 {% endfor %}
-                
                 {{ form.body() }}
                 {% for error in form.body.errors %}
                     <span class="help-inline">[{{error}}]</span><br>
